@@ -32,16 +32,19 @@ function loadPage() {
 
 function handleClick(event) {
   loader.classList.remove('is-hidden');
+  catInfo.style.display = 'none';
   fetchCatByBreed(event.target.value)
     .then(([data]) => {
       const { url, breeds } = data;
       const { name, description, temperament } = breeds[0];
       catInfo.innerHTML = `<img src="${url}" alt="${name}"/><h1>${name}</h1><p>${description}</p><p><b>Temperament:</b>${temperament}</p>`;
+      catInfo.style.display = 'block';
     })
     .catch(error => {
       Notiflix.Notify.failure(
         'Oops! Something went wrong! Try reloading the page!'
       );
+      catInfo.style.display = 'none';
     })
     .finally(() => {
       loader.classList.add('is-hidden');
